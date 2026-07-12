@@ -490,6 +490,7 @@ button {
   position: relative;
   z-index: 2;
   height: min(72vh, 580px);
+  bottom: -55px;
   background-size: contain;
   background-position: center right;
   background-repeat: no-repeat;
@@ -522,7 +523,7 @@ button {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -10px;
     z-index: 1;
     height: 42vh;
     max-height: 320px;
@@ -649,10 +650,10 @@ button {
 @media (max-width: 768px) {
   #about {
     /* 1. Aligns the image to the bottom-right corner */
-    background-position: right bottom !important; 
+    background-position: right bottom !important;
 
   }
-} 
+}
 
 .section#about .container {
   position: relative;
@@ -868,7 +869,7 @@ button {
   align-items: start;
 }
 
-.portfolio-section{
+.portfolio-section {
   background: var(--navy-950);
 }
 
@@ -1054,7 +1055,7 @@ button {
   }
 
   .portfolio-card {
-    width: 180px;
+    width:200px;
   }
 
   .portfolio-nav-prev {
@@ -1322,8 +1323,8 @@ button {
   line-height: 1.6;
 }
 
-.contact-row-col span:nth-child(1){
-  color:var(--gold-600);
+.contact-row-col span:nth-child(1) {
+  color: var(--gold-600);
 }
 
 .contact-row-col a {
@@ -1514,7 +1515,7 @@ button {
     padding: 0 2rem;
   }
 
-  .footer-links{
+  .footer-links {
     gap: 16px;
   }
 
