@@ -243,7 +243,7 @@ button {
   right: 0;
   z-index: 500;
   width: 100%;
-  padding: 22px 0;
+  padding: 32px 0;
   background: transparent;
   border-bottom: 1px solid transparent;
   backdrop-filter: none;
@@ -287,10 +287,10 @@ button {
 }
 
 .topbar.is-scrolled {
-  padding: 10px 0;
-  background: rgba(246, 242, 234, 0.78);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  padding: 3px 0;
+  background: rgba(246, 242, 234, 0.58);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
   border-bottom: 1px solid rgba(16, 29, 58, 0.07);
   box-shadow: 0 8px 24px -14px rgba(12, 23, 48, .25);
 }
@@ -848,6 +848,11 @@ button {
 }
 
 @media (max-width: 560px) {
+
+  .topbar.is-scrolled {
+    padding: 6px 0;
+  }
+
   .how-media {
     max-width: 260px;
   }
@@ -1055,7 +1060,7 @@ button {
   }
 
   .portfolio-card {
-    width:200px;
+    width: 200px;
   }
 
   .portfolio-nav-prev {
@@ -1511,6 +1516,10 @@ button {
 }
 
 @media (max-width: 560px) {
+  .topbar {
+    padding: 15px 0;
+  }
+
   .container {
     padding: 0 2rem;
   }
