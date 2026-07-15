@@ -25,11 +25,12 @@
     heroVan.style.setProperty('--wipe', progress.toFixed(4));
   };
 
+  let scrollTicking = false;
+
   const onScroll = () => {
     if (window.scrollY > 12) topbar.classList.add('is-scrolled');
     else topbar.classList.remove('is-scrolled');
 
-    // route progress line
     const doc = document.documentElement;
     const scrollTop = window.scrollY;
     const height = doc.scrollHeight - doc.clientHeight;
@@ -37,7 +38,17 @@
     routeFill.style.width = pct + '%';
 
     updateHeroWipe();
+    scrollTicking = false;
   };
+
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      requestAnimationFrame(onScroll);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateHeroWipe);
+  onScroll();
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', updateHeroWipe);
@@ -78,10 +89,10 @@
   });
 
   document.addEventListener('click', (e) => {
-  if (!topnav.classList.contains('is-open')) return;
-  if (topnav.contains(e.target) || menuToggle.contains(e.target)) return;
-  closeMenu();
-});
+    if (!topnav.classList.contains('is-open')) return;
+    if (topnav.contains(e.target) || menuToggle.contains(e.target)) return;
+    closeMenu();
+  });
 
   // ---------- Scroll reveal ----------
   const revealEls = document.querySelectorAll('[data-reveal]');
@@ -185,5 +196,52 @@
     }, { passive: true });
 
     renderStack();
+  }
+
+  // ---------- Founder card tap-to-reveal (mobile) ----------
+  document.querySelectorAll('.founder-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (window.innerWidth > 720) return;
+      if (e.target.closest('a')) return;
+      const wasActive = card.classList.contains('is-active');
+      document.querySelectorAll('.founder-card.is-active').forEach(c => c.classList.remove('is-active'));
+      if (!wasActive) card.classList.add('is-active');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth > 720) return;
+    if (e.target.closest('.founder-card')) return;
+    document.querySelectorAll('.founder-card.is-active').forEach(c => c.classList.remove('is-active'));
+  });
+
+  // ---------- Custom package builder ----------
+  const packageForm = document.getElementById('packageForm');
+  if (packageForm) {
+    packageForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const selected = Array.from(packageForm.querySelectorAll('input[name="item"]:checked')).map(i => i.value);
+      const name = packageForm.pkgName.value.trim();
+      const company = packageForm.pkgCompany.value.trim();
+      const phone = packageForm.pkgPhone.value.trim();
+      const notes = packageForm.pkgNotes.value.trim();
+
+      const lines = [
+        `Name: ${name || 'Not provided'}`,
+        `Company: ${company || 'Not provided'}`,
+        `Phone: ${phone || 'Not provided'}`,
+        '',
+        'Products / Services requested:',
+        selected.length ? selected.map(s => `- ${s}`).join('\n') : '- None selected',
+        '',
+        'Notes:',
+        notes || 'None'
+      ].join('\n');
+
+      const subject = encodeURIComponent(`Custom Package Enquiry${name ? ' from ' + name : ''}`);
+      const body = encodeURIComponent(lines);
+
+      window.location.href = `mailto:yk.groupofcompanies1@gmail.com?subject=${subject}&body=${body}`;
+    });
   }
 })();

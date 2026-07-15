@@ -213,6 +213,54 @@ button {
   margin-top: clamp(8px, 1.5vw, 12px);
 }
 
+/* ==========================================================================
+   INNER PAGE HERO (reusable across all non-home pages)
+   ========================================================================== */
+.page-hero {
+  position: relative;
+  padding: 180px 0 90px;
+  background-image: url('/assets/pages-bg.webp');
+  background-size: cover;
+  height: 100dvh;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.page-hero .container {
+  position: relative;
+  margin-top: 3.5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.page-hero .eyebrow {
+  color: var(--gold-300);
+}
+
+.page-hero .h2 {
+  color: var(--white);
+  margin-top: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.8rem, 3.6vw, 3rem);
+}
+
+.page-hero .p-lead {
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 18px;
+  max-width: 200ch;
+}
+
+@media (max-width: 720px) {
+  .page-hero {
+    padding: 150px 0 60px;
+  }
+}
+
 
 /* ---------- Route progress (top of viewport) ---------- */
 .route-progress {
@@ -258,9 +306,29 @@ button {
   transition: all .35s var(--ease);
 }
 
+/* Active link base color (scrolled / light navbar state) */
+.topnav a.is-active {
+  color: var(--navy-950);
+}
+
+.topnav a.is-active::after {
+  width: 100%;
+  background: var(--gold-600);
+}
+
+/* Active link on transparent/top state (matches your existing hover color) */
+.topbar:not(.is-scrolled) .topnav a.is-active {
+  color: var(--gold-300);
+}
+
+.topbar:not(.is-scrolled) .topnav a.is-active::after {
+  background: var(--gold-300);
+}
+
 .topbar:not(.is-scrolled) .topnav a:hover {
   color: var(--gold-300);
 }
+
 
 .topbar:not(.is-scrolled) .brand-sub {
   color: var(--gold-300);
@@ -415,6 +483,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* contain: layout paint; */
 }
 
 
@@ -425,6 +494,7 @@ button {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  transform: translateZ(0);
 }
 
 
@@ -497,6 +567,7 @@ button {
   transform: translateX(calc(var(--wipe) * -30vw));
   opacity: clamp(0, calc(1 - var(--wipe)), 1);
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 
@@ -528,7 +599,7 @@ button {
     height: 42vh;
     max-height: 320px;
     background-position: bottom center;
-    transform: translateX(calc(var(--wipe) * -110vw));
+    transform: translate3d(calc(var(--wipe) * -110vw), 0, 0);
   }
 
 }
@@ -722,6 +793,184 @@ button {
 }
 
 /* ==========================================================================
+   FOUNDERS
+   ========================================================================== */
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 320px));
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.founder-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(to top,
+      var(--navy-700) 0%,
+      var(--navy-950) 140%);
+  cursor: pointer;
+}
+
+.founder-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .9s var(--ease);
+}
+
+.founder-card:hover img {
+  transform: scale(1.09);
+}
+
+.founder-base {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 24px;
+  background: linear-gradient(180deg, transparent, rgba(12, 23, 48, 0.9) 95%);
+  transition: opacity .7s var(--ease);
+}
+
+.founder-base h3 {
+  color: var(--white);
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.founder-role {
+  color: var(--gold-300);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.founder-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(180deg, rgba(12, 23, 48, 0.75), rgba(12, 23, 48, 0.97) 55%);
+  transform: translateY(100%);
+  transition: transform .5s var(--ease);
+}
+
+.founder-card:hover .founder-overlay {
+  transform: translateY(0);
+}
+
+.founder-card:hover .founder-base {
+  opacity: 0;
+}
+
+.founder-overlay h3 {
+  color: var(--white);
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.founder-overlay .founder-role {
+  display: block;
+  margin-bottom: 18px;
+}
+
+.founder-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.founder-details li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.founder-details svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: var(--gold-300);
+  margin-top: 2px;
+}
+
+.founder-details a,
+.founder-details span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.founder-details a {
+  transition: color .25s var(--ease);
+}
+
+.founder-details a:hover {
+  color: var(--gold-300);
+}
+
+@media (max-width: 720px) {
+  .founder-card {
+    cursor: default;
+  }
+
+  .founder-overlay {
+    transform: translateY(100%);
+    position: absolute;
+  }
+
+  .founder-card.is-active .founder-overlay {
+    transform: translateY(0);
+  }
+
+  .founder-card.is-active .founder-base {
+    opacity: 0;
+  }
+
+  .founder-base {
+    display: none;
+  }
+
+  .founder-card {
+    aspect-ratio: auto;
+  }
+
+  .founder-card img {
+    aspect-ratio: 3 / 4;
+    border-radius: var(--radius-lg);
+  }
+
+  .founder-overlay h3,
+  .founder-overlay .founder-role {
+    color: var(--navy-950);
+  }
+
+  .founder-overlay .founder-role {
+    color: var(--gold-700);
+  }
+
+  .founder-details a,
+  .founder-details span {
+    color: var(--ink-soft);
+  }
+}
+
+@media (max-width: 560px) {
+  .founders-grid {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ==========================================================================
    CATEGORIES
    ========================================================================== */
 .how-list {
@@ -862,6 +1111,187 @@ button {
     padding: 0 0.4rem;
   }
 }
+
+
+#package {
+  position: relative;
+  overflow: hidden;
+  background: #0a0812;
+}
+
+#package .section-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(closest-side at 70% 75%, rgba(230, 220, 255, 0.9), rgba(230, 220, 255, 0) 60%),
+    radial-gradient(closest-side at 20% 60%, rgba(124, 58, 237, 0.85), rgba(124, 58, 237, 0) 65%),
+    radial-gradient(closest-side at 85% 20%, rgba(88, 28, 135, 0.8), rgba(88, 28, 135, 0) 60%),
+    radial-gradient(closest-side at 40% 15%, rgba(15, 10, 25, 0.95), rgba(15, 10, 25, 0) 55%),
+    #0a0812;
+  filter: blur(60px) saturate(135%);
+}
+
+#package .section-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0px, transparent 1px, transparent 3px);
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+#package .container {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ==========================================================================
+   CUSTOM PACKAGE BUILDER
+   ========================================================================== */
+.package-builder {
+  padding: 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.package-group-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-300);
+  margin-bottom: 18px;
+}
+
+.package-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.package-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.package-option input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.package-option span {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease);
+}
+
+.package-option input:checked+span {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
+  border-color: transparent;
+  color: var(--navy-950);
+}
+
+.package-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.package-field-wide {
+  grid-column: 1 / -1;
+}
+
+.package-field label {
+  display: block;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.package-field input,
+.package-field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.package-field input::placeholder,
+.package-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.package-field input:focus,
+.package-field textarea:focus {
+  outline: none;
+  border-color: var(--gold-500);
+}
+
+.package-field input:-webkit-autofill,
+.package-field input:-webkit-autofill:hover,
+.package-field input:-webkit-autofill:focus,
+.package-field textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--white);
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.06) inset;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.06) inset;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  caret-color: var(--white);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.package-field input:autofill {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.package-submit {
+  align-self: flex-start;
+}
+
+.package-submit .icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+  .package-builder {
+    padding: 28px 22px;
+  }
+
+  .package-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .package-submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 
 /* ==========================================================================
    PORTFOLIO CAROUSEL
@@ -1148,7 +1578,51 @@ button {
 .why-bento .why-tile:nth-child(5) {
   grid-column: 1;
   grid-row: 3;
-  display: none;
+  display: block;
+}
+
+.why-bento .why-tile:nth-child(6) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.why-bento .why-tile:nth-child(7) {
+  grid-column: 1 / span 2;
+  grid-row: 4;
+}
+
+@media (max-width: 920px) {
+  .why-bento .why-tile:nth-child(5) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .why-bento .why-tile:nth-child(6) {
+    grid-column: 2;
+    grid-row: 4;
+  }
+
+  .why-bento .why-tile:nth-child(7) {
+    grid-column: 1 / span 2;
+    grid-row: 5;
+  }
+}
+
+@media (max-width: 620px) {
+  .why-bento .why-tile:nth-child(5) {
+    grid-column: 1;
+    grid-row: 5;
+  }
+
+  .why-bento .why-tile:nth-child(6) {
+    grid-column: 1;
+    grid-row: 6;
+  }
+
+  .why-bento .why-tile:nth-child(7) {
+    grid-column: 1;
+    grid-row: 7;
+  }
 }
 
 .why-tile-cta {
